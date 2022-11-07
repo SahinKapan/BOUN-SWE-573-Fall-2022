@@ -1,0 +1,29 @@
+img{
+  display:flex;
+         justify-content:center;
+         align-items:center;
+}
+
+#textMybrain {
+  color: #dbb3c9;
+  display:flex;
+         justify-content:center;
+         align-items:center;
+  font-size: 25px
+}
+
+
+#formLogin{
+  background-color: #dbb3c9;
+  color: white;
+  height: 35vh;
+  display: flex;
+  justify-content:center;
+         align-items:center;
+
+}
+
+.button
+{
+    color:black;
+}

@@ -1,6 +1,12 @@
-body {
-  margin: 0;
-  overflow: hidden;
-  background-color: black;
+nav {
+  height: 110px
+}
+
+p{
   color:white;
+  white-space:pre
+}
+
+ul{
+  padding-right: 100px
 }
