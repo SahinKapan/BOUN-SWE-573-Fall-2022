@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+
+from django.contrib import auth
 # Create your models here.
 
 
@@ -14,3 +16,10 @@ class UserProfileInfo(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class User(auth.models.User,auth.models.PermissionsMixin):
+
+
+    def __str__(self):
+        return "@{}".format(self.username)

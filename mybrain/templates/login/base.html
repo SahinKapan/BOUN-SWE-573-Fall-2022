@@ -29,7 +29,12 @@
           </li>
 
           {% if user.is_authenticated %}
-            <li><a class='navbar-link' href="{% url 'logout' %}">Logout</a></li>
+            <li>
+              <a href="{% url 'logout' %}">
+                <img src="{% static 'images/logologin.png'%}" width="38" height="45" class="d-inline-block align-top" alt="">
+                <p>LogOut</p>
+              </a>
+              </li>
           {% else %}
             <li><a href="{% url 'login:user_login' %}">
               <img src="{% static 'images/logologin.png'%}" width="38" height="45" class="d-inline-block align-top" alt="">

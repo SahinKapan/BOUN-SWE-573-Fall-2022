@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from login.forms import UserForm, UserProfileInfoForm
 
-
+from django.views.generic import CreateView
+from . import forms
 #
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -11,6 +12,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 # Create your views here.
+
+class SignUp(CreateView):
+    form_class = forms.UserCreateForm
+    success_url = reverse_lazy('index')
+    template_name = 'login/registration.html'
+
+
+
+
 def index(request):
     return render(request,'login/index.html')
 
