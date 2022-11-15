@@ -1,0 +1,69 @@
+<!DOCTYPE html
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>MyBrain</title>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'mybrain/css/master.css'%}">
+
+  </head>
+  <body>
+
+
+
+    <nav class='navbar navbar-light bg-light' role='navigation' id='navbar' style="background-color: #dbb3c9;">
+
+        <a class='navbar-brand mynav' href="{% url 'home' %}">
+            <img src="{% static 'images/mybrainlogo.png'%}" width="110" height="70" class="d-inline-block align-top" alt="">
+            <p>    MyBrain</p>
+        </a>
+
+
+
+
+        <ul class='nav navbar-nav navbar-right'>
+          {% if user.is_authenticated %}
+            <li><a href="#">Post</a></li>
+            <li><a href="#">Groups</a></li>
+            <li><a href="#">Create Group</a></li>
+            <li><a href="{% url 'accounts:logout' %}">Log Out</a></li>
+          {% else %}
+            <li><a href="#">Groups</a></li>
+            <li><a href="{% url 'accounts:login' %}">
+              <img src="{% static 'images/logologin.png'%}" width="38" height="45" class="d-inline-block align-top" alt="">
+              <p>Log In</p>
+            </a></li>
+            <li><a href="{% url 'accounts:signup' %}">
+              <img src="{% static 'images/signup.png'%}" width="50" height="45" class="d-inline-block align-top" alt="">
+              <p>Sign Up</p>
+            </a></li>
+          {% endif %}
+        </ul>
+
+
+
+    </nav>
+
+    <div class="container mycontent">
+
+      {% block content %}
+
+      {% endblock %}
+
+    </div>
+
+
+
+  </body>
+</html>

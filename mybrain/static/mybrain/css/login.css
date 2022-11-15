@@ -16,20 +16,11 @@ img{
 #formLogin{
   background-color: #dbb3c9;
   color: white;
-  height: 35vh;
-  display: flex;
-  justify-content:center;
-         align-items:center;
 
 }
 
-.button
-{
-    color:black;
-}
-
-
-input
-{
+.loginMybrain {
   background-color: black;
+  color: white;
+  border: 5px outset #dbb3c9;
 }
