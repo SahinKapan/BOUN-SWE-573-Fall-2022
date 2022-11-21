@@ -10,3 +10,10 @@ p{
 ul{
   padding-right: 100px
 }
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: white;
+  color:black;
+}

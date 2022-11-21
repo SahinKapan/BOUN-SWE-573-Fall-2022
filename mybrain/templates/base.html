@@ -34,12 +34,12 @@
 
         <ul class='nav navbar-nav navbar-right'>
           {% if user.is_authenticated %}
-            <li><a href="#">Post</a></li>
-            <li><a href="#">Groups</a></li>
-            <li><a href="#">Create Group</a></li>
+            <li><a href="{% url 'posts:create' %}">Post</a></li>
+            <li><a href="{% url 'groups:all' %}">Groups</a></li>
+            <li><a href="{% url 'groups:create' %}">Create Group</a></li>
             <li><a href="{% url 'accounts:logout' %}">Log Out</a></li>
           {% else %}
-            <li><a href="#">Groups</a></li>
+            <li><a href="{% url 'groups:all' %}">Groups</a></li>
             <li><a href="{% url 'accounts:login' %}">
               <img src="{% static 'images/logologin.png'%}" width="38" height="45" class="d-inline-block align-top" alt="">
               <p>Log In</p>
@@ -66,4 +66,5 @@
 
 
   </body>
+  <script type="text/javascript" src="{% static 'mybrain/js/master.js' %}"></script>
 </html>

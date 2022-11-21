@@ -19,8 +19,8 @@ img{
 
 }
 
-.loginMybrain {
-  background-color: black;
+#loginMybrain {
+  background-color: #dbb3c9;
   color: white;
-  border: 5px outset #dbb3c9;
+  border: 10px outset #dbb3c9;
 }
