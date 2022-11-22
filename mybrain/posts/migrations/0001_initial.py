@@ -51,7 +51,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "ordering": ["-created_at"],
-                "unique_together": {("user", "message")},
+                #"unique_together": {("user", "message")},
             },
         ),
     ]
