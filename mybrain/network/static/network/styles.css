@@ -525,14 +525,14 @@ svg{
 }
 .page-item.active .page-link{
     color: white !important;
-    background-color: #28a745;
-    border-color: #28a745;
+    background-color: #dbb3c9;
+    border-color: #dbb3c9;
 }
 .page-link{
-    color: #28a745;
+    color: #dbb3c9;
 }
 .page-link:hover{
-    color: #218838;
+    color: #dbb3c9;
 }
 .page-link:focus{
     box-shadow: none !important;
@@ -749,7 +749,7 @@ svg{
     margin: 0px;
 }
 .large-popup textarea:focus hr{
-    color: #28a745;
+    color:#dbb3c9;
 }
 .large-popup .form-action-btns{
     display: flex;

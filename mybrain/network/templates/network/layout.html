@@ -33,6 +33,7 @@
                         <form action="{% url 'createpost' %}" method="POST" class="newpost" enctype="multipart/form-data">
                             {% csrf_token %}
                             <textarea name="text" autofocus placeholder="What's happening?" rows="5" id="post-text"></textarea>
+                            <textarea name="link" autofocus placeholder="Link?" rows="1" id="link-text"></textarea>
                             <input type="hidden" id="img-change" value="false"></input>
                             <div id='img-div'>
                                 <button id="del-img" type='button'>
@@ -253,7 +254,7 @@
                                         </a>
                                     </div>
                                     <div>
-                                        <button class="btn btn-outline-success" type="button" onclick="follow_user(this,'{{suggestion.username}}','suggestion')">Follow</button>
+                                        <button id="followBtn" class="btn btn-outline-success" type="button" onclick="follow_user(this,'{{suggestion.username}}','suggestion')">Follow</button>
                                     </div>
                                 </div>
                             {% empty %}

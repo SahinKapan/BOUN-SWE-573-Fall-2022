@@ -175,8 +175,9 @@ def create_post(request):
     if request.method == 'POST':
         text = request.POST.get('text')
         pic = request.FILES.get('picture')
+        link = request.POST.get('link')
         try:
-            post = Post.objects.create(creater=request.user, content_text=text, content_image=pic)
+            post = Post.objects.create(creater=request.user, content_text=text, content_image=pic, link=link)
             return HttpResponseRedirect(reverse('index'))
         except Exception as e:
             return HttpResponse(e)
