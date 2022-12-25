@@ -8,10 +8,10 @@
     <div class="main-div">
         <div class="left-div">
             <nav class="head heading">
-                {% if page == 'all_posts' %}
-                    All Posts
-                {% elif page == 'following' %}
+                {% if page == 'following' %}
                     Following
+                {% elif page == 'all_posts' %}
+                    All Posts
                 {% elif page == 'saved' %}
                     Saved
                 {% elif page == 'profile' %}
@@ -19,12 +19,22 @@
                 {% else %}
                     Explore
                 {% endif %}
+
+                
             </nav>
+
+        
+
             <div class="left-div-content">
                 <div class="posts-view">
                     {% block profile %}
                     {% endblock %}
                     <div class="main-div-content">
+                        {% comment %} <form id="search-form" action="{% url 'search_brains' %}" method="get">
+                            {% csrf_token %}
+                            <input type="text" name="q" placeholder="Search Brain">
+                            <button id="search-btn" class="btn btn-success new-post-btn" type="submit">Search</button>
+                        </form> {% endcomment %}
                         {% for post in posts %}
                             <div class="post" data-post_id="{{post.id}}">
                                 <div>
@@ -76,7 +86,24 @@
                                             </div>
                                             <p></p>
                                             <p></p>
-                                            <a id="gotolink" class="btn btn-success btn-sm mr-3" href="{{ post.link}}"> Go to Link </a>
+                                            <div class="link-content">
+                                                <a id="gotolink" class="btn btn-success btn-sm mr-3" href="{{post.link}}"> Go to Link </a>
+                                            </div>
+                                            
+                                            <p></p>
+                                            <p></p>
+                                            <div class="post-tags">
+                                            {% comment %} {% for tag in post.tags.all %}
+                                                <a href="{% url 'posts_by_tag' tag.slug %}" class"mr-1 badge badge-info">#{{ tag }}</a>
+                                            {% endfor %} {% endcomment %}
+                                                {% for tag in post.tags.all %}
+                                                    {% if tag.slug %}
+                                                        <a href="{% url 'posts_by_tag' tag.slug %}" class"mr-1 badge badge-info">#{{ tag }}</a>
+                                                    {% else %}
+                                                        <a href="#" class"mr-1 badge badge-info">#{{ tag }}</a>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
                                         {% endif %}
                                         {% if post.content_image %}
                                             <div class="post-image" style="background-image: url(/media/{{post.content_image}});"></div>

@@ -6,6 +6,8 @@ Django==3.2
 django-bootstrap3==22.1
 django-braces==1.15.0
 django-misaka==0.2.1
+django-taggit==3.1.0
+django-taggit-anywhere==1.0.0
 houdini.py==0.1.0
 misaka==2.1.1
 mysqlclient==2.1.1
@@ -15,3 +17,4 @@ Pygments==2.13.0
 PyMySQL==1.0.2
 python-decouple==3.6
 sqlparse==0.4.3
+

@@ -1,14 +1,20 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 import json
 
+from django.db.models import Q
 from .models import *
+from taggit.models import Tag
+
+
+from django.views.generic import ListView
+
 
 
 def index(request):
@@ -31,6 +37,25 @@ def index(request):
     })
 
 
+    
+
+class BrainsSearchView(ListView):
+    model = Post
+    template_name = 'network/index.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Post.objects.filter(content_text__icontains=query).order_by('-date_created')
+
+class TagIndexView(ListView):
+    model = Post
+    template_name = 'network/index.html'
+    context_object_name = 'posts'
+    
+    def get_queryset(self):
+        return Post.objects.filter(tags__slug=self.kwargs.get('tag_slug'))
+
 def login_view(request):
     if request.method == "POST":
 
@@ -42,7 +67,7 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("following"))
         else:
             return render(request, "network/login.html", {
                 "message": "Invalid username and/or password."
@@ -176,13 +201,26 @@ def create_post(request):
         text = request.POST.get('text')
         pic = request.FILES.get('picture')
         link = request.POST.get('link')
+        tags = request.POST.get('tags')
         try:
             post = Post.objects.create(creater=request.user, content_text=text, content_image=pic, link=link)
+            # Add tags to the post
+            if tags:
+                tags_list = tags.split(",")
+                post.tags.add(*tags_list)
             return HttpResponseRedirect(reverse('index'))
         except Exception as e:
             return HttpResponse(e)
     else:
         return HttpResponse("Method must be 'POST'")
+
+
+
+def tagged_posts (request,pk):
+    context =  {
+        'posts': Post.objects.filter(tags=pk)
+       }
+    return render(request, 'network/tags.html', context)
 
 @login_required
 @csrf_exempt
@@ -192,27 +230,53 @@ def edit_post(request, post_id):
         pic = request.FILES.get('picture')
         img_chg = request.POST.get('img_change')
         post_id = request.POST.get('id')
+
+        link = request.POST.get('link')
+        tags = request.POST.get('tags')
+
         post = Post.objects.get(id=post_id)
+
+        tag_list = tags.split(',')
+        post.tags.clear()
+        for tag in tag_list:
+            post.tags.add(tag)
+
+
         try:
             post.content_text = text
+
+            post.link = link
+
             if img_chg != 'false':
                 post.content_image = pic
+
+
+
             post.save()
             
             if(post.content_text):
                 post_text = post.content_text
             else:
                 post_text = False
+
+            if(post.link):
+                post_link = post.link
+            else:
+                post_link = False    
+            
             if(post.content_image):
                 post_image = post.img_url()
             else:
                 post_image = False
             
-            return JsonResponse({
+            return render(request, "network/profile.html", {
                 "success": True,
                 "text": post_text,
-                "picture": post_image
+                "picture": post_image,
+                "link": post_link
             })
+            
+            
         except Exception as e:
             print('-----------------------------------------------')
             print(e)

@@ -81,9 +81,28 @@ function edit_post(element) {
     let popup = document.querySelector('.large-popup');
     let promise = new Promise((resolve, reject) => {
         let post_text = post.querySelector('.post-content').innerText;
+        
+        //let post_link = post.querySelector('.link-content').innerText;
+        let post_link = post.querySelector('.link-content a').getAttribute('href');
+
         let post_image = post.querySelector('.post-image').style.backgroundImage;
 
+        let post_tags = post.querySelector('.post-tags').innerText;
+
+        post_tags = post_tags.split('#');
+        post_tags = post_tags.filter(Boolean);
+        post_tags = post_tags.join(',');
+        if (post_tags.charAt(0) === ',') {
+            post_tags = post_tags.substring(1);
+          }
+
         popup.querySelector('#post-text').value = post_text;
+
+        //popup.querySelector('#link-text').value = post_link;
+        popup.querySelector('#link-text').value = post_link;
+
+        popup.querySelector('#tags-text').value = post_tags;
+
         if(post_image) {
             popup.querySelector('#img-div').style.backgroundImage = post_image;
             document.querySelector('#del-img').addEventListener('click', del_image);
@@ -103,10 +122,19 @@ function edit_post(element) {
 function edit_post_submit(post_id) {
     let popup = document.querySelector('.large-popup');
     let text = popup.querySelector('#post-text').value;
+
+    let link = popup.querySelector('#link-text').value;
+
+    let tags = popup.querySelector('#tags-text').value;
+
     let pic = popup.querySelector('#insert-img');
     let chg = popup.querySelector('#img-change');
     let formdata = new FormData();
     formdata.append('text',text);
+    formdata.append('link',link);
+
+    formdata.append('tags', tags);
+
     formdata.append('picture',pic.files[0]);
     formdata.append('img_change', chg.value);
     formdata.append('id',post_id);
@@ -126,6 +154,14 @@ function edit_post_submit(post_id) {
                     else {
                         post.querySelector('.post-content').innerText = "";
                     }
+
+                    if(response.link) {
+                        post.querySelector('.link-content').innerText = response.link;
+                    }
+                    else {
+                        post.querySelector('.link-content').innerText = "";
+                    }
+
                     if(response.picture) {
                         post.querySelector('.post-image').style.backgroundImage = `url(${response.picture})`;
                         post.querySelector('.post-image').style.display = 'block';
@@ -136,13 +172,16 @@ function edit_post_submit(post_id) {
                     }
                 }
             });
+            location.reload(true);
             return false;
         }
         else {
             console.log('There was an error while editing the post.');
         }
     });
+    location.reload(true);
     remove_popup();
+    
     return false;
 }
 

@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
+from taggit.managers import TaggableManager
+
 
 
 class User(AbstractUser):
@@ -28,7 +30,8 @@ class Post(models.Model):
     likers = models.ManyToManyField(User,blank=True , related_name='likes')
     savers = models.ManyToManyField(User,blank=True , related_name='saved')
     comment_count = models.IntegerField(default=0)
-    link = models.CharField(max_length=200,blank=True)
+    link = models.TextField(max_length=200,blank=True)
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         return f"Post ID: {self.id} (creater: {self.creater})"

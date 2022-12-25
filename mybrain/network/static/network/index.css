@@ -3,3 +3,16 @@
     background-color: #dbb3c9;
     border-color: #dbb3c9
 }
+#search-btn {
+    color: white;
+    background-color: #dbb3c9;
+    border-color: #dbb3c9;
+    height:25px;
+    padding: 0px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#search-form {
+    margin-right: 0;
+}

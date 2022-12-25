@@ -34,6 +34,9 @@
                             {% csrf_token %}
                             <textarea name="text" autofocus placeholder="What's happening?" rows="5" id="post-text"></textarea>
                             <textarea name="link" autofocus placeholder="Link?" rows="1" id="link-text"></textarea>
+                            <p></p>
+                            <p></p>
+                            <input type="text" name="tags" autofocus placeholder="Tags?" rows="1" id="tags-text"></textarea>
                             <input type="hidden" id="img-change" value="false"></input>
                             <div id='img-div'>
                                 <button id="del-img" type='button'>
@@ -95,14 +98,14 @@
 
         <div class="body" data-page="{{page}}">
             <div class="sidenav">
-                <a href="{% url 'index' %}" class="navbar-brand">
+                <a href="{% url 'following' %}" class="navbar-brand">
                     <img src="{% static 'network/Images/mybrainmainlogo.png' %}" height="100px">
                 </a>
                 <div style="height: 100%;">
                     <div>
                         <div>
                             <ul>
-                                <li class="nav-item" id="all_posts">
+                                {% comment %} <li class="nav-item" id="all_posts">
                                 <a href="{% url 'index' %}" class="nav-link">
                                     <div>
                                         <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-card-heading" fill="#dbb3c9" xmlns="http://www.w3.org/2000/svg">
@@ -113,7 +116,7 @@
                                         &nbsp;&nbsp;<b>All Posts</b> 
                                     </div>
                                 </a>
-                                </li>
+                                </li>  {% endcomment %}
                                 {% if user.is_authenticated %}
                                     <li class="nav-item" id="following">
                                         <a href="{% url 'following' %}" class="nav-link">
@@ -125,6 +128,18 @@
                                             </div>
                                         </a>
                                     </li>
+                                    <li class="nav-item" id="all_posts">
+                                        <a href="{% url 'index' %}" class="nav-link">
+                                            <div>
+                                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-card-heading" fill="#dbb3c9" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                                    <path fill-rule="evenodd" d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+                                                    <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
+                                                </svg>
+                                                &nbsp;&nbsp;<b>All Posts</b> 
+                                            </div>
+                                        </a>
+                                        </li>
                                     <li class="nav-item" id="saved">
                                         <a href="{% url 'saved' %}" class="nav-link">
                                             <div>
@@ -158,6 +173,18 @@
                                         </a>
                                     </li>
                                 {% else %}
+                                <li class="nav-item" id="all_posts">
+                                    <a href="{% url 'index' %}" class="nav-link">
+                                        <div>
+                                            <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-card-heading" fill="#dbb3c9" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                                <path fill-rule="evenodd" d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+                                                <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
+                                            </svg>
+                                            &nbsp;&nbsp;<b>All Posts</b> 
+                                        </div>
+                                    </a>
+                                    </li>
                                     <li class="nav-item" id="login">
                                         <a href="{% url 'login' %}" class="nav-link">
                                             <div>
@@ -215,19 +242,15 @@
             {% endblock %}
 
             <div class="right-div">
-                <nav class="head">
-                    <form action="#">
-                        <div class="search-div">
-                            <div>
-                                <svg width="1em" height="1.6em" viewBox="0 0 16 6" class="bi bi-search" fill="#6d7e8c" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
-                                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
-                                </svg>
-                            </div>
-                            <input type="text" name="query" id="search-box" placeholder="Search Brain">
-                        </div>
-                    </form>
-                </nav>
+                 <nav class="head">
+                    
+                            <form id="search-form" action="{% url 'search_brains' %}" method="get">
+                            {% csrf_token %}
+                            <input type="text" name="q" placeholder="Search Brain">
+                            <button id="search-btn" class="btn btn-success new-post-btn" type="submit">Search</button>
+                        </form> 
+                        
+                </nav> 
                 <div class='right-div-content'>
                     <div class="space" style="background-color: white;"></div>
                     {% if user.is_authenticated %}
